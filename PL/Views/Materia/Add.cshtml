@@ -1,0 +1,38 @@
+﻿@model ML.Materia
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Agregar</h2>
+
+@using (Html.BeginForm("Add", "Materia", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.IdMateria)
+
+    <div class="row">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.Nombre, new {@class = "hidden"})
+            @Html.TextBoxFor(model => model.Nombre, new {@class = "coll-auto"})
+            <label style="color:#ff0000">@Html.ValidationMessageFor(model => model.Nombre)</label>
+        </div>
+
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.costo, new { @class = "hidden" })
+            @Html.TextBoxFor(model => model.costo, new {@class = "coll-auto" })
+            <label style="color:#ff0000">@Html.ValidationMessageFor(model => model.costo)</label>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-md-3">
+            <input type="submit" data-toggle="modal" value="Guardar" class="btn btn-success"/>
+        </div>
+
+        <div class="col-md-3">
+            <a class="btn btn-danger" href="@Url.Action("GetAll","Materia")">Regresar</a>
+        </div>
+    </div>
+}

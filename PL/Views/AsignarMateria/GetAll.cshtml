@@ -1,0 +1,53 @@
+﻿@model ML.Alumnos
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Asignar Materia</h2>
+
+@if (Model.TAlumnos != null)
+{
+
+
+<div class="row">
+        <div class="col-md-12">
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <td>Nombre</td>
+                        <td>Apellido Paterno</td>
+                        <td>Apellido Materno</td>
+                        <td>Asignar Materia</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.Alumnos alumno in Model.TAlumnos)
+                    {
+                        <tr>
+                            <th>@alumno.Nombre</th>
+                            <th>@alumno.ApellidoPaterno</th>
+                            <th>@alumno.ApellidoMaterno</th>
+
+                            <th>
+                                <a class="btn btn-warning"
+                                   href="@Url.Action("GetMateriasAsignadas","AsignarMateria", new { IdAlumno = alumno.IdAlumno })"
+                                   >Asignar</a>
+                            </th>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        No existen registros en la tabla :(
+    </div>
+}

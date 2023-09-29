@@ -1,0 +1,116 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewBag.Title = "GetMateriaNoAsignada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetMateriaNoAsignada</h2>
+
+@if (Model.Materia.Materias != null)
+{
+
+
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Add", "AsignarMateria", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+
+
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>costo</td>
+                            <td>Agregar</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (ML.AlumnoMateria materia in Model.Materia.Materias)
+                        {
+                            <tr>
+                                <th>@materia.Materia.Nombre</th>
+                                <th>@materia.Materia.costo</th>
+                                <th>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="IdMaterias"
+                                               value="@materia.Materia.IdMateria" onchange=" Sumar(this, @materia.Materia.costo) " />
+                                    </div>
+                                </th>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+
+                <label>Precio $</label>
+                <input id="txtValor" type="text" readonly value="0" class="form-control" />
+
+
+                <div class="col-md-2">
+                    <a class="btn btn-warning"
+                       href="@Url.Action("GetMateriasAsignadas","AsignarMateria", new { IdAlumno = Model.Alumno.IdAlumno })">
+                        Regresar
+                    </a>
+                </div>
+
+                @Html.HiddenFor(model => model.Alumno.IdAlumno)
+                <div class="col-md-2">
+                    <input type="submit" class="btn btn-success" data-toggle="modal" value="Guardar" />
+                </div>
+            }
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        No existen materias para este alumno :(
+    </div>
+}
+
+<script type="text/javascript">
+
+    function Sumar(e, costo) {
+        var txt_costototal = document.getElementById("txtValor");
+        var total = txt_costototal.value;
+
+        if (e.checked) {
+            total = parseFloat(total) + parseFloat(costo);
+        }
+        else {
+            total = parseFloat(total) - parseFloat(costo);
+        }
+
+
+        if (total < 0) {
+            total = 0
+        }
+
+        txt_costototal.value = "";
+        txt_costototal.value = parseFloat(total);
+    }
+
+    function Agregar(e, value) {
+        var t_Materias = document.getElementById("txtMaterias");
+        let Materias = [];
+
+        if (e.checked) {
+            Materias.push(value)
+        }
+        else {
+            Materias.splice(value, 1);
+        }
+
+        t_Materias.value = "";
+        t_Materias.value = (Materias);
+
+        console.log(escogidos)
+    }
+
+</script>
+

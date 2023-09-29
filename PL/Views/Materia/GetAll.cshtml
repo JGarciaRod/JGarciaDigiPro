@@ -1,0 +1,54 @@
+﻿@model  ML.Materia
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Materia</h2>
+
+@if (Model.Materias != null)
+{
+<div class="row">
+    <div class="col-md-12">
+
+        <a class="btn btn-success" href="@Url.Action("Add","Materia",new {IdMateria = 0})">Agregar nueva materia</a>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>IdNateria</th>
+                    <th>Nombre</th>
+                    <th>Costo</th>
+                    <th>Actualizar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ML.Materia materia in Model.Materias)
+                {
+                    <tr>
+                        <td>@materia.IdMateria</td>
+                        <td>@materia.Nombre</td>
+                        <td>@materia.costo</td>
+                        <td>
+                            <a class="btn btn-warning"
+                               href="@Url.Action("Add","Materia", new {IdMateria = materia.IdMateria })">Actualizar</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-dark"
+                               href="@Url.Action("Dell", "Materia", new { IdMateria = materia.IdMateria })"
+                               onclick="return confirm('Estas seguro de eliminar');"> Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        No existen registros en la tabla :(
+    </div>
+}

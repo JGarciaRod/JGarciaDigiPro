@@ -1,0 +1,51 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewBag.Title = "GetMateriasAsignadas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="text-center">Materias Asignadas</h2>
+
+@if (Model.Materia.Materias != null)
+{
+
+<div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-success" href="@Url.Action("GetMateriaNoAsignada","AsignarMateria", new {IdAlumno = Model.Alumno.IdAlumno })">Agregar nueva materia</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Nombre de Materia</td>
+                        <td>Costo</td>
+                        <td>Eliminar</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.AlumnoMateria materia in Model.Materia.Materias)
+                    {
+                        <tr>
+                            <th>@materia.Materia.Nombre</th>
+                            <th>@materia.Materia.costo</th>
+
+                            <th>
+                                <a href="@Url.Action("Dell", "AsignarMateria", new { IdAlumno = Model.Alumno.IdAlumno, IdMateria = materia.Materia.IdMateria })" class="btn btn-danger"  onclick="return confirm('Estas seguro en eliminarlo');" value="Eliminar">Eliminar</a>
+                            </th>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+            <a class="btn btn-warning" href="@Url.Action("GetAll","AsignarMateria" )">Regresar</a>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        No existen materias para este alumno :(
+    </div>
+}

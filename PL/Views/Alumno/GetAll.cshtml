@@ -1,0 +1,63 @@
+﻿@model ML.Alumnos
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Alumnos</h2>
+
+@if (Model.TAlumnos != null)
+{
+<div class="row">
+        <div class="col-md-12">
+
+            <a class="btn btn-success" href="@Url.Action("Add","Alumno", new {IdAlumno = 0} )">Agergar nuevo alumno</a>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>IdAlumno</th>
+                        <th>Nombte</th>
+                        <th>ApellidoPaterno</th>
+                        <th>ApellidoMaterno</th>
+
+                        <th>Actualizar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (ML.Alumnos alumnos in Model.TAlumnos)
+                    {
+                        <tr>
+                            <td>@alumnos.IdAlumno</td>
+                            <td>@alumnos.Nombre</td>
+                            <td>@alumnos.ApellidoPaterno</td>
+                            <td>@alumnos.ApellidoMaterno</td>
+                            <td>
+                                <a class="btn btn-warning"
+                                   href="@Url.Action("Add","Alumno", new { IdAlumno = alumnos.IdAlumno })"
+                                   >Actualizar</a>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-dark"
+                                   href="@Url.Action("Dell","Alumno", new { IdAlumno = alumnos.IdAlumno })",
+                                   onclick="return confirm('Seguro que deseas eliminar');"
+                                   >Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        No existen registros en la tabla :(
+    </div>
+}
+
